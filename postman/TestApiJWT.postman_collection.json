@@ -8,6 +8,9 @@
 	"item": [
 		{
 			"name": "Create Users",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
 			"request": {
 				"method": "POST",
 				"header": [
@@ -234,6 +237,58 @@
 					"path": [
 						"videos",
 						"{{idLastVideo}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Video with environment variable Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"idLastVideo\", pm.response.json().id);\r",
+							"\r",
+							"pm.test(\"Status test\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/ld+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Voici la video avec postman\",\r\n  \"video\": \"https://www.youtube.com/embed/eaodLB1zWdU\",\r\n  \"description\": \"c'est la fameuse video avce postman\",\r\n  \"user\": \"/api/users/{{id}}\",\r\n  \"premiumVideo\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}api/videos",
+					"host": [
+						"{{url}}api"
+					],
+					"path": [
+						"videos"
 					]
 				}
 			},
