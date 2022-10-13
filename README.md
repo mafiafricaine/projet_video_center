@@ -23,8 +23,8 @@ N'oubliez pas de configurer mailtrap dans le fichier .env
 
 Si vous voulez utiliser les tokens, il faudra faire cette commande :
   - symfony console lexik:jwt:generate-keypair
-  
-(Si ça ne marche pas, créez d'abord un dossier jwt dans config et recommencer)
+
+Si ça ne marche pas, créez d'abord un dossier jwt dans config et recommencer.
 Si ça marche toujours pas suivez ces étapes :
   - openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
   - openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
@@ -34,7 +34,7 @@ Une fois fais vous pourrez utiliser sans problème les tokens JWT.
 Si vous avez installez newman sur votre ordinateur, vous pourrez créer un utilisateur et une vidéo premium en une commande :
   - newman run ./postman/TestApiJWT.postman_collection.json  -k -e ./postman/EnvironnementTESTAPIJWT.postman_environment.json
 
-Il vous créera 1 utilisateur, il suffira de vous loguez :
+Il vous créera 1 utilisateur déjà vérifié, il suffira de vous loguez :
  -  tokens@cfitech.be
  -  password : tokens
 
