@@ -4,15 +4,19 @@ Si vous le récupérez.
 N'oubliez pas tout d'abord de faire 
   - composer update
   - npm update
+  - 
 Pour avoir tous les composants nécessaire pour le bon fonctionnement.
 Il faudra allumer Wampserver.
 Faire la création de la base de données en faisant :
   - symfony console doctrine:database:create
+  - 
 N'oubliez pas ensuite de faire une migration vers cette base de données.
-
 Il faudra ensuite faire un petit :
   - symfony console cache:clear
+  
 Ensuite lancer le serveur symfony ainsi que npm :
   - symfony serve -d
   - npm run dev
 
+Si vous avez installez newman sur votre ordinateur, vous pourrez créer un utilisateur et une vidéo premium en une commande :
+  - newman run ./postman/TestApiJWT.postman_collection.json  -k -e ./postman/EnvironnementTESTAPIJWT.postman_environment.json
