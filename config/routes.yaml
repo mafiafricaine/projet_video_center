@@ -1,0 +1,9 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+fc_load_events:
+  path: /fc-load-events
+  defaults:
+    _controller: CalendarBundle\Controller\CalendarController::loadAction
+api_login_check:
+    path: /api/login_check

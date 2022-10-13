@@ -1,0 +1,243 @@
+{
+	"info": {
+		"_postman_id": "b2ec5a9e-601d-40bc-90d9-cceae2e5ce75",
+		"name": "TestApiJWT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14092971"
+	},
+	"item": [
+		{
+			"name": "Create Users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/ld+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"vendredi@cfitech.be\",\r\n  \"password\": \"$2y$13$srUgwuK.WL54cpvy1Axl0eQlXS9KPde6jBbgTDqb3JD2SWN3PtFm6\",\r\n  \"firstname\": \"Vendredi\",\r\n  \"lastname\": \"Vendredi\",\r\n  \"isVerified\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}api/users",
+					"host": [
+						"{{url}}api"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Users 2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/ld+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"samedi@cfitech.be\",\r\n  \"password\": \"$2y$13$2TPZMWWG/uYCeQlWy3pdguolojjG5CnHMGREWeEkiomQvT2xbZftO\",\r\n  \"firstname\": \"Samedi\",\r\n  \"lastname\": \"Samedi\",\r\n  \"isVerified\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}api/users",
+					"host": [
+						"{{url}}api"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User, test and save id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"id\", pm.response.json().id);\r",
+							"pm.environment.set(\"username\", pm.response.json().username);\r",
+							"\r",
+							"pm.test(\"Status test\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/ld+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"tokens@cfitech.be\",\r\n  \"password\": \"$2y$13$jNZSb5NfkrKbtVd1layXCO.oFj3zr0Sotn0nwqkH3xH8uVVtyymya\",\r\n  \"firstname\": \"Tokens\",\r\n  \"lastname\": \"Tokens\",\r\n  \"isVerified\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}api/users",
+					"host": [
+						"{{url}}api"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login with environment variable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"token\", pm.response.json().token);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status test login\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/ld+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"{{username}}\",\r\n  \"password\": \"tokens\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}api/login_check",
+					"host": [
+						"{{url}}api"
+					],
+					"path": [
+						"login_check"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Video with environment variable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"idLastVideo\", pm.response.json().id);\r",
+							"\r",
+							"pm.test(\"Status test\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/ld+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Voici la video avec postman\",\r\n  \"video\": \"https://www.youtube.com/embed/eaodLB1zWdU\",\r\n  \"description\": \"c'est la fameuse video avce postman\",\r\n  \"user\": \"/api/users/{{id}}\",\r\n  \"premiumVideo\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}api/videos",
+					"host": [
+						"{{url}}api"
+					],
+					"path": [
+						"videos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a video with environment variable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test deleted\", function() {\r",
+							"    pm.response.to.have.status(204);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}api/videos/{{idLastVideo}}",
+					"host": [
+						"{{url}}api"
+					],
+					"path": [
+						"videos",
+						"{{idLastVideo}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

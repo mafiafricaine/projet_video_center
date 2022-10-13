@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Video Center{% endblock %}
+
+{% block body %}
+    
+    {# <iframe width="300" height="200" src="https://www.youtube.com/embed/lcZDWo6hiuI%22%3E </iframe>  #}
+    <div class = "container">
+    <div class = "row">
+    {% for video in videos %}
+        {% if app.user == true %}   
+            <article class = "col-4">
+            <h3><a href={{ path('app_video_show', {id: video.id}) }}>{{ video.title|u.truncate(30,'...',false) }}</a></h3>
+            <iframe width="300" height="200" src= "{{ video.video }}"> </iframe>
+            <h5>{{ video.description|u.truncate(15,'...',false) }}</h5>
+            <p>Submitted {{ video.createdAt|ago }}
+            <p>By {{ video.user.firstname ~ ' ' ~ video.user.lastname }}
+            </article>
+        {% endif %}
+
+    {% else %}
+        <p> Sorry, no video yet </p>
+    {% endfor %}
+    </div>
+    </div>
+{% endblock %}

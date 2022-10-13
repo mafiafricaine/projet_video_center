@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ video.title }}{% endblock %}
+
+{% block body %}
+    {# <a href="/pin/create">Create a Pinterest</a>
+    <a href="/">List of Pinterest</a> #}
+
+    {# {% if video.premiumVideo == true %}
+        {% if app.user.isVerified == false OR app.user == Null %} #}
+
+
+    <article>
+            <h1>{{ video.title }}</h1>
+            <iframe width="640" height="480" src= "{{ video.video }}"> </iframe>
+            <h5>{{ video.description }}</h5>
+            <p>Submitted {{ video.createdAt|date }}</p>
+            <p>Last modification {{ video.updatedAt|date }}</p>
+            <p>By {{ video.user.firstname ~ ' ' ~ video.user.lastname }}      
+    </article>
+    {% if app.user %}
+        {% if app.user.email is same as (video.user.email) %}
+            <a href="{{ path('app_video_edit', {id: video.id}) }}">Edit Video | </a>
+      
+            {# <a href="{{ path('app_pin_delete', {id: pin.id}) }}">Delete Pin | </a> #}
+            <a href="#" onclick="event.preventDefault(); confirm('Are you sure ?') && document.getElementById('js-video-delete-form').submit();">Delete | </a>
+        {% endif %}
+    {% endif %}
+    <a href="{{ path('app_home') }}">Go Back</a>
+
+    <form id ="js-video-delete-form" action="{{ path('app_video_delete', {id: video.id}) }}" method ="post" >
+        <input type="hidden" name ="_method" value="DELETE"/>
+    </form>
+{% endblock %}

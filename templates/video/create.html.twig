@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'New Video' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <h1>Create Video</h1>
+            {{ include('video/_form.html.twig', {'submitButtonText': 'Create Video'}) }}
+        </div>
+    </div>
+{% endblock %}
