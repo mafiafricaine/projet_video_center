@@ -1,6 +1,6 @@
 # projet_video_center 
 Ce projet a été fait pour la formation Dev Web à Cfitech.
-Si vous le récupérez. 
+Si vous le récupérez. LISEZ ATTENTIVEMENT
 N'oubliez pas tout d'abord de faire 
   - composer update
   - npm update
